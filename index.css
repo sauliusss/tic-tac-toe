@@ -1,3 +1,8 @@
+:root {
+  --cell-size: 100px;
+  --mark-size: calc(var(--cell-size) * 0.9);
+}
+
 main {
   display: flex;
   flex-direction: column;
@@ -7,31 +12,80 @@ main {
   font-size: 25px;
   text-transform: uppercase;
 }
-table {
-  border-collapse: collapse;
-  display: flex;
-  align-items: center;
+.table {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  display: grid;
   justify-content: center;
+  align-content: center;
+  align-items: center;
+  grid-template-columns: repeat(3, auto);
 }
 
-table tr:first-child td {
+.cell {
+  cursor: pointer;
+  position: relative;
+  width: var(--cell-size);
+  height: var(--cell-size);
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cell:first-child,
+.cell:nth-child(2),
+.cell:nth-child(3) {
   border-top: none;
 }
-table tr:last-child td {
-  border-bottom: none;
-}
-table tr td:first-child {
+
+.cell:nth-child(3n + 1) {
   border-left: none;
 }
-table tr td:last-child {
+.cell:nth-child(3n + 3) {
   border-right: none;
 }
 
-td {
-  width: 100px;
-  height: 100px;
-  text-align: center;
-  border: 2px solid black;
-  background-color: aquamarine;
-  cursor: pointer;
+.cell:last-child,
+.cell:nth-child(7),
+.cell:nth-child(8) {
+  border-bottom: none;
+}
+
+.cell.x::before,
+.cell.x::after {
+  content: "";
+  position: absolute;
+  width: calc(var(--mark-size) * 0.15);
+  height: var(--mark-size);
+  background-color: black;
+}
+
+.cell.x::before {
+  transform: rotate(45deg);
+}
+.cell.x::after {
+  transform: rotate(-45deg);
+}
+
+.cell.o::before,
+.cell.o::after {
+  content: "";
+  position: absolute;
+  width: calc(var(--mark-size));
+  height: var(--mark-size);
+  background-color: black;
+  border-radius: 50%;
+}
+
+.cell.o::before {
+  width: var(--mark-size);
+  height: var(--mark-size);
+  background-color: black;
+}
+.cell.o::after {
+  width: calc(var(--mark-size) * 0.7);
+  height: calc(var(--mark-size) * 0.7);
+  background-color: white;
 }

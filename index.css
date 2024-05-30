@@ -53,38 +53,58 @@ main {
   border-bottom: none;
 }
 
+.cell.x,
+.cell.o {
+  cursor: not-allowed;
+}
+
 .cell.x::before,
-.cell.x::after {
+.cell.x::after,
+.cell.o::before {
+  background-color: black;
+}
+
+.table.x .cell:not(.x):not(.o):hover::before,
+.table.x .cell:not(.x):not(.o):hover::after,
+.table.o .cell:not(.x):not(.o):hover::before {
+  background-color: lightgray;
+}
+
+.cell.x::before,
+.cell.x::after,
+.table.x .cell:not(.x):not(.o):hover::before,
+.table.x .cell:not(.x):not(.o):hover::after {
   content: "";
   position: absolute;
   width: calc(var(--mark-size) * 0.15);
   height: var(--mark-size);
-  background-color: black;
 }
 
-.cell.x::before {
+.cell.x::before,
+.table.x .cell:not(.x):not(.o):hover::before {
   transform: rotate(45deg);
 }
-.cell.x::after {
+.cell.x::after,
+.table.x .cell:not(.x):not(.o):hover::after {
   transform: rotate(-45deg);
 }
 
 .cell.o::before,
-.cell.o::after {
+.cell.o::after,
+.table.o .cell:not(.x):not(.o):hover::before,
+.table.o .cell:not(.x):not(.o):hover::after {
   content: "";
   position: absolute;
-  width: calc(var(--mark-size));
-  height: var(--mark-size);
-  background-color: black;
   border-radius: 50%;
 }
 
-.cell.o::before {
+.cell.o::before,
+.table.o .cell:not(.x):not(.o):hover::before {
   width: var(--mark-size);
   height: var(--mark-size);
-  background-color: black;
 }
-.cell.o::after {
+.cell.o::after,
+.table.o .cell:not(.x):not(.o):hover::after {
   width: calc(var(--mark-size) * 0.7);
   height: calc(var(--mark-size) * 0.7);
   background-color: white;

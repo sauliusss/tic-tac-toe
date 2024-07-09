@@ -1,5 +1,5 @@
 const cellElements = document.querySelectorAll("[data-cell]");
-const table = document.getElementById("table");
+const table = document.querySelector(".table");
 const player1 = "o";
 const player2 = "x";
 let circleTurn;
@@ -14,15 +14,25 @@ const winningCombo = [
   [0, 4, 8],
   [2, 4, 6],
 ];
-
+const winningMessageElement = document.getElementById("msg");
+const winningMessageTextElement = document.querySelector("[msg-text]");
+const restartBtn = document.getElementById("replay");
 startGame();
+
+restartBtn.addEventListener("click", startGame);
 
 function startGame() {
   circleTurn = false;
   cellElements.forEach((cell) => {
+    cell.classList.remove(player1);
+    cell.classList.remove(player2);
+    cell;
     cell.addEventListener("click", handleClick, { once: true });
   });
-  // boardHoverClass();
+
+  // boardHoverClass
+  boardHoverClass();
+  winningMessageElement.classList.remove("show");
 }
 
 function handleClick(e) {
@@ -30,13 +40,20 @@ function handleClick(e) {
   const currentClass = circleTurn ? player1 : player2;
   // placemark
   placeMark(cell, currentClass);
+  if (checkWin(currentClass)) {
+    endGame(false);
+  } else if (isDraw()) {
+    endGame(true);
+  } else {
+    boardHoverClass();
+    swapTurns();
+  }
   // swap turns
-  swapTurns();
+  // swapTurns();
   // check win
   if (checkWin(currentClass)) {
-    console.log("winner");
+    endGame(false);
   }
-  // boardHoverClass();
 }
 
 function placeMark(cell, currentClass) {
@@ -47,15 +64,30 @@ function swapTurns() {
   circleTurn = !circleTurn;
 }
 
-// function boardHoverClass() {
-//   table.classList.remove(player1);
-//   table.classList.remove(player2);
-//   if (circleTurn) {
-//     table.classList.add(player1);
-//   } else {
-//     table.classList.add(player2);
-//   }
-// }
+function endGame(draw) {
+  if (draw) {
+    winningMessageTextElement.innerText = "Draw!";
+  } else {
+    winningMessageTextElement.innerText = `${circleTurn ? "Player1" : "Player2"} Wins!`;
+  }
+  winningMessageElement.classList.add("show");
+}
+
+function isDraw() {
+  return [...cellElements].every((cell) => {
+    return cell.classList.contains(player1) || cell.classList.contains(player2);
+  });
+}
+
+function boardHoverClass() {
+  table.classList.remove(player1);
+  table.classList.remove(player2);
+  if (circleTurn) {
+    table.classList.add(player2);
+  } else {
+    table.classList.add(player1);
+  }
+}
 
 function checkWin(currentClass) {
   return winningCombo.some((combination) => {

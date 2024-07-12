@@ -22,7 +22,11 @@ const audio = document.getElementById("audio");
 startGame();
 
 restartBtn.addEventListener("click", startGame);
-
+document.body.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    startGame();
+  }
+});
 function startGame() {
   circleTurn = false;
   cellElements.forEach((cell) => {

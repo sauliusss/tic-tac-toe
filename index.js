@@ -17,6 +17,8 @@ const winningCombo = [
 const winningMessageElement = document.getElementById("msg");
 const winningMessageTextElement = document.querySelector("[msg-text]");
 const restartBtn = document.getElementById("replay");
+const audio = document.getElementById("audio");
+
 startGame();
 
 restartBtn.addEventListener("click", startGame);
@@ -33,6 +35,10 @@ function startGame() {
   // boardHoverClass
   boardHoverClass();
   winningMessageElement.classList.remove("show");
+}
+
+function playAudio() {
+  audio.play();
 }
 
 function handleClick(e) {
@@ -67,8 +73,10 @@ function swapTurns() {
 function endGame(draw) {
   if (draw) {
     winningMessageTextElement.innerText = "Draw!";
+    playAudio();
   } else {
-    winningMessageTextElement.innerText = `${circleTurn ? "Player1" : "Player2"} Wins!`;
+    winningMessageTextElement.innerText = `${circleTurn ? "Player2" : "Player1"} LOSE!`;
+    playAudio();
   }
   winningMessageElement.classList.add("show");
 }

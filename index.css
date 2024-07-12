@@ -142,3 +142,7 @@ main {
 .show {
   display: flex;
 }
+
+audio {
+  display: none;
+}
